@@ -8,6 +8,7 @@ public class Player {
     private Weapon weapon;
     private Armor armor;
     private Item item;
+    private Consumable consumable;
 
     // CONSTRUCTOR
     Player(String name, int health, int mana, int max_HP, int max_Mana) {
@@ -19,6 +20,7 @@ public class Player {
         this.inventory = new Inventory();
         this.weapon = null;
         this.armor = null;
+        this.consumable = null;
     }
 
     // GETTERS AND SETTERS
@@ -26,8 +28,36 @@ public class Player {
         return name;
     }
 
+    public int getHealth() {
+        return health;
+    }
+
+    public int getMana() {
+        return mana;
+    }
+
+    public int getMax_HP() {
+        return max_HP;
+    }
+
+    public int getMax_Mana() {
+        return max_Mana;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public void setMana(int mana) {
+        this.mana = mana;
+    }
+
     public Inventory getInventory() {
         return inventory;
+    }
+
+    public Consumable getConsumable() {
+        return consumable;
     }
 
     public Weapon getWeapon() {

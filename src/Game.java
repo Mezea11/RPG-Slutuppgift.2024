@@ -1,3 +1,4 @@
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Game {
@@ -12,10 +13,10 @@ public class Game {
             System.out.println("Enter your player name: ");
             String playerName = sc.nextLine();
             player = new Player(playerName, 100, 50, 150, 100);
-            System.out.println("Welcome to Dungeons and Dragons.");
+            System.out.println(playerName + ", you have entered your inventory.");
             System.out.println("Choose between options:");
-            System.out.println("1. Start game");
-            System.out.println("2. Exit game");
+            System.out.println("1. Browse inventory.");
+            System.out.println("2. Exit inventory");
             int choice = sc.nextInt();
 
             switch(choice) {
@@ -39,7 +40,7 @@ public class Game {
     }
 
     public void startGame() {
-        System.out.println("Welcome " + player.getName() + "!");
+        System.out.println("**" + player.getName() + " inventory**");
         System.out.println("Choose between options:");
 
         while(true) {
@@ -50,13 +51,19 @@ public class Game {
             System.out.println("5. Equip weapon");
             System.out.println("6. Create armor");
             System.out.println("7. Equip armor");
-            System.out.println("8. Player stats:");
-            System.out.println("9. Exit");
+            System.out.println("8. Create consumable");
+            System.out.println("9. Use consumable");
+            System.out.println("10. Player stats:");
+            System.out.println("11. Exit");
             int playerChoice = sc.nextInt();
             sc.nextLine();
             switch(playerChoice) {
                 case 1:
-                    player.getInventory().showItems(toString());
+                    if(player.getInventory().getItems().isEmpty() ) {
+                        System.out.println("Nothing in inventory.");
+                    } else {
+                        player.getInventory().showItems(toString());
+                    }
                     break;
                 case 2:
                     createItem();
@@ -77,14 +84,17 @@ public class Game {
                     equipArmor();
                     break;
                 case 8:
-                    System.out.println("Player stats: ");
-                    System.out.println(player);
-                    
+                    createConsumable();
                     break;
                 case 9:
-                    System.out.println("Exiting to main menu...");
-                    return;
-
+                    useConsumable();
+                case 10:
+                    System.out.println("Player stats: ");
+                    System.out.println(player);
+                    break;
+                case 11:
+                    System.out.println("Exiting...");
+                    System.exit(0);
                 default:
                     System.out.println("Invalid option, try again.");
             }
@@ -145,6 +155,35 @@ public class Game {
 
         Weapon weapon = new Weapon(weaponName, weaponWeight, weaponValue, player);
         player.getInventory().addWeapon(weapon);  // Add the weapon to the player's inventory
+    }
+
+    public void createConsumable() {
+        System.out.println("Enter name of the consumable you want to add: ");
+        String consumableName = sc.nextLine();
+        if (Objects.equals(consumableName, "Health potion")) {
+            Consumable consumable = new Consumable("Health potion", 1, 100, player, "Health potion", 50);
+            player.getInventory().addConsumable(consumable);  // Add the consumable to the player's inventory
+        } else if (Objects.equals(consumableName, "Mana potion")) {
+            Consumable consumable = new Consumable("Mana potion", 1, 100, player, "Mana potion", 50);
+            player.getInventory().addConsumable(consumable);  // Add the consumable to the player's inventory
+        } else {
+            System.out.println("Wrong input. Try again");
+        }
+    }
+
+    public void useConsumable() {
+        System.out.println("Enter the name of the consumable you want to use: ");
+        String consumableName = sc.nextLine();
+
+        // Loop through inventory and search for users input
+        for (Item item : player.getInventory().getItems()) {
+            if(item instanceof Consumable && item.getItemName().equalsIgnoreCase(consumableName)) {
+                Consumable consumable = (Consumable) item;
+                consumable.use();
+                return;
+            }
+        }
+        System.out.println("Item doesn't exist. Try again.");
     }
 
     public void equipWeapon() {

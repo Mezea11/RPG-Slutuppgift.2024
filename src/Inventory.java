@@ -47,6 +47,11 @@ class Inventory  {
         System.out.println(armor.getItemName() + " has been added to your armor storage.");
     }
 
+    public void addConsumable(Consumable consumable) {
+        items.add(consumable);
+        System.out.println(consumable.getItemName() + " has been added to your consumables.");
+    }
+
     @Override
     public String toString() {
         return items.toString();
@@ -56,6 +61,5 @@ class Inventory  {
     public List<Item> getItems() {
         return items;
     }
-
 
 }
