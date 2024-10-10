@@ -16,6 +16,14 @@ public class Item {
         this.name = name;
     }
 
+    public int getItemValue() {
+        return value;
+    }
+
+    public void setItemValue(int value) {
+        this.value = value;
+    }
+
 
     @Override
     public String toString() {

@@ -5,14 +5,16 @@ public class Game {
     Scanner sc = new Scanner(System.in);
     boolean running = true;
     Player player;
-    Item item;
+    Shop shop;
 
     public void GameMenu() {
 
         while(running) {
             System.out.println("Enter your player name: ");
             String playerName = sc.nextLine();
-            player = new Player(playerName, 100, 50, 150, 100);
+            player = new Player(playerName, 100, 50, 150, 100, 100);
+            shop = new Shop(); // init shop
+            shop.player = player; // pass player ref to shop
             System.out.println(playerName + ", you have entered your inventory.");
             System.out.println("Choose between options:");
             System.out.println("1. Browse inventory.");
@@ -54,7 +56,8 @@ public class Game {
             System.out.println("8. Create consumable");
             System.out.println("9. Use consumable");
             System.out.println("10. Player stats:");
-            System.out.println("11. Exit");
+            System.out.println("11. Enter the shop");
+            System.out.println("12. Exit");
             int playerChoice = sc.nextInt();
             sc.nextLine();
             switch(playerChoice) {
@@ -93,6 +96,9 @@ public class Game {
                     System.out.println(player);
                     break;
                 case 11:
+                    shop.inventoryShop();
+                    break;
+                case 12:
                     System.out.println("Exiting...");
                     System.exit(0);
                 default:
@@ -212,6 +218,7 @@ public class Game {
         }
         System.out.println("Armor not found.");
     }
+
 
 
     // Prints 8 empty lines when invoked to "clear" console.

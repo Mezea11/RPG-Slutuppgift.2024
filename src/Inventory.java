@@ -30,6 +30,10 @@ class Inventory  {
         }
     }
 
+    public void sellItem(Item item){
+        items.remove(item);
+    }
+
     public void showItems(String string){
         for(Item item : items){
             System.out.println(item);
